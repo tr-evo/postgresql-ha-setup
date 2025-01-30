@@ -131,5 +131,11 @@ journalctl -u haproxy
 
 ## License
 
-MIT
+This project is licensed under GNU GPL v3.0. Any derivative work must:
+- Maintain the same open-source license
+- Provide attribution to this original repository
+- Include a link to this repository
+- Document any changes made
+
+For the full license text, see the [LICENSE](LICENSE) file.
 
