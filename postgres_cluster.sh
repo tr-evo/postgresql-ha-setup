@@ -803,8 +803,9 @@ EOF
 # Main Installation
 ###################
 main() {
-    local NODE_TYPE=$1
-    local REPLICA_NUM=$2
+    # Use environment variables if arguments not provided
+    local NODE_TYPE=${1:-${NODE_TYPE:-primary}}
+    local REPLICA_NUM=${2:-${REPLICA_NUM:-1}}
 
     check_prerequisites
 
@@ -824,9 +825,6 @@ main() {
             install_monitoring_stack
             ;;
         "replica")
-            if [ -z "$REPLICA_NUM" ]; then
-                error "Replica number is required for replica setup"
-            fi
             configure_postgresql_replica "$REPLICA_NUM"
             ;;
         *)

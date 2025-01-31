@@ -1,6 +1,18 @@
 # PostgreSQL High-Availability Cluster Setup
 
-This project provides a comprehensive setup for a PostgreSQL high-availability cluster with monitoring capabilities.
+> ⚠️ **WORK IN PROGRESS - NOT PRODUCTION READY**
+>
+> **Current Status:**
+> - This code is under active development and not working yet
+> - Current focus: Getting the script to work in Docker environment with one primary and one replica
+> - Known Issues:
+>   - Container creation works but connection to logstream fails
+>   - Docker networking between primary and replica needs debugging
+>
+> **Next Steps:**
+> - Debug container log streaming issues
+> - Test and verify primary-replica communication
+> - Validate replication setup in Docker environment
 
 ## Features
 
@@ -23,6 +35,41 @@ This project provides a comprehensive setup for a PostgreSQL high-availability c
 ./postgres_cluster.sh primary
 # Setup replica node
 PRIMARY_IP=192.168.1.10 ./postgres_cluster.sh replica 1
+```
+
+## Docker Development Setup (Current WIP)
+
+The project is currently being adapted to work in a Docker environment. To try the current development version:
+
+1. Build and run the containers:
+```bash
+docker-compose -f docker-compose.test.yml up --build
+```
+
+2. Expected Endpoints (when working):
+- Primary PostgreSQL: localhost:5432
+- Replica PostgreSQL: localhost:5433
+- Grafana: http://localhost:3000
+- Prometheus: http://localhost:9090
+- HAProxy Stats: http://localhost:7000
+
+3. Known Issues:
+- Container log streaming may fail
+- Replication setup between containers needs verification
+- Some monitoring endpoints may not be accessible yet
+
+4. Debugging:
+```bash
+# View container logs
+docker-compose -f docker-compose.test.yml logs -f
+
+# Access container shell
+docker-compose -f docker-compose.test.yml exec pg_primary bash
+docker-compose -f docker-compose.test.yml exec pg_replica bash
+
+# Check PostgreSQL status
+docker-compose -f docker-compose.test.yml exec pg_primary pg_isready -U postgres
+docker-compose -f docker-compose.test.yml exec pg_replica pg_isready -U postgres
 ```
 
 ## Configuration Parameters
